@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-
-import logo from './logo.svg';
-
-import ConfigForm from './components/ConfigForm';
-import Header from './components/Header';
+import Wizard from './components/Wizard';
 
 import './App.css';
 
@@ -14,12 +10,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="catch-of-the-day">
       <div className="menu">
-          <Header />
+            <Wizard />
         </div>
-      <ConfigForm/>
-      </div>
     );
   }
 }
