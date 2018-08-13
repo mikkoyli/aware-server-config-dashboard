@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import StepWizard from 'react-step-wizard';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 /* eslint react/prop-types: 0 */
 
-/**
- * A basic demonstration of how to use the step wizard
- */
 export default class Wizard extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +24,6 @@ export default class Wizard extends Component {
     render() {
         return (
             <div className='container'>
-                <h2>AWARE server configuration wizard</h2>
-
                 <div className='jumbotron'>
                     <div className='row'>
                         <div className='col-xs-12 col-sm-6 offset-3'>
@@ -50,9 +47,6 @@ export default class Wizard extends Component {
  */
 const Stats = ({
     currentStep,
-    firstStep,
-    goToStep,
-    lastStep,
     nextStep,
     previousStep,
     totalSteps,
@@ -60,12 +54,12 @@ const Stats = ({
     <div>
         <hr />
         { currentStep > 1 &&
-            <button className='btn btn-default btn-block' onClick={previousStep}>Go Back</button>
+            <Button variant="contained" color="primary" className='btn btn-default btn-block' onClick={previousStep}>Go Back</Button>
         }
         { currentStep < totalSteps ?
-            <button className='btn btn-primary btn-block' onClick={nextStep}>Continue</button>
+            <Button variant="contained" color="primary" className='btn btn-primary btn-block' onClick={nextStep}>Continue</Button>
             :
-            <button className='btn btn-success btn-block' onClick={nextStep}>Finish</button>
+            <Button variant="contained" color="primary" className='btn btn-success btn-block' onClick={nextStep}>Finish</Button>
         }
         <hr />
         <div style={{ fontSize: '21px', fontWeight: '200' }}>
@@ -95,20 +89,73 @@ class First extends Component {
 }
 
 class Second extends Component {
+    state = {
+        name: 'Cat in the Hat',
+        age: '',
+        multiline: 'Controlled',
+        currency: 'EUR',
+      };
+    
+      handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+      };
+      
     render() {
         return (
             <div>
-                <form className="config-selector">
+                <form className="config-selector" noValidate autoComplete="off">
         <h2>Enter configuration variables</h2>
-        <input type="text" required placeholder="mysql_ip" /><br/>
-        <input type="text" required placeholder="mysql_port" /><br/>
-        <input type="text" required placeholder="mysql_user" /><br/>
-        <input type="text" required placeholder="mysql_pass" /><br/>
-        <input type="text" required placeholder="mysql_database" /><br/>
-        <input type="text" required placeholder="mysql_engine" /><br/>
-        <input type="text" required placeholder="node_cerftificates" /><br/>
-        <input type="text" required placeholder="node_port" /><br/>
-        <button type="submit">Create config →</button>
+        <TextField label="MySQL hostname" placeholder="localhost" required id="mysql_ip" /><br/>
+        <TextField label="MySQL port" placeholder="3306" required id="mysql_port" /><br/>
+        <TextField label="MySQL user" placeholder="" required id="mysql_user" /><br/>
+        <TextField label="MySQL password" placeholder="" required id="mysql_pass" /><br/>
+        <TextField label="MySQL database" placeholder="" required id="mysql_database" /><br/>
+        <TextField label="Node.js port" placeholder="3000" required id="node_port" /><br/>
+
+        <TextField
+          id="mysql_engine"
+          select
+          label="MySQL engine"
+          value="value"
+          SelectProps={{
+            native: true,
+          }}
+          helperText="Select MySQL engine used in setup"
+          margin="normal"
+        >
+        <option key="mysql_engine" value="innodb">
+              InnoDB
+        </option>
+        <option key="mysql_engine" value="ndb">
+              NDB
+        </option>
+        </TextField>
+        <br/>
+        <TextField
+          id="node_cerftificates"
+          select
+          label="Certificates"
+          value="value"
+          SelectProps={{
+            native: true,
+          }}
+          helperText="Do you want to use certificates?"
+          margin="normal"
+        >
+        <option key="node_cerftificates" value="true">
+              Yes
+        </option>
+        <option key="node_cerftificates" value="false">
+              No
+        </option>
+        </TextField>
+
+
+
+
+        
       </form>
                 <Stats {...this.props} />
             </div>
